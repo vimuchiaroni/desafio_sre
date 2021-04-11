@@ -4,14 +4,22 @@ import logging
 from flask import jsonify
 from flask import request
 
+#Logging configuration
+logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(name)s | %(levelname)s | %(message)s')
+
+#Flask application configuration
 app_name = 'gatos'
 app = Flask(app_name)
 app.debug = True
 
-
-logging.info("Initializing Database...")
-db = createDB.Cats()
-db.main()
+#Runtime create database
+try:
+    logging.info("Initializing Database...")
+    db = createDB.Cats()
+    db.main()
+    logging.info("Database created successfully")
+except Exception as dbError:
+    logging.error(f"Failed to create Database: {dbError}")
 
 
 @app.route('/api/racas', methods=['get'])
