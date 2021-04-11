@@ -6,6 +6,7 @@ class Cats():
     def __init__(self):
         self.document={}
         self.data = requests.get("https://api.thecatapi.com/v1/breeds")
+        #self.db = TinyDB('nosql.db')
 
     def getCatsInfo(self):
 
@@ -20,9 +21,9 @@ class Cats():
                     "descricao": breed['description']
                 }
                 if id in self.document:
-                    self.document[id].update(cat)
+                    self.document[id][0].append(cat)
                 else:
-                    self.document[id] = cat
+                    self.document[id] = [cat]
 
         except Exception as ex:
             print(ex)
@@ -39,21 +40,27 @@ class Cats():
                 }
 
                 if id in self.document:
-                    self.document[id].update(cat)
+                    self.document[id][0].update(cat)
                 else:
-                    self.document[id] = cat
+                    self.document = [cat]
 
         except Exception as ex:
             print(ex)
 
     def insertToDB(self):
 
-        db = TinyDB('nosql.db')
-        db.insert(self.document)
-def main():
-    run = Cats()
-    run.getCatsInfo()
-    run.getCatsImages()
-    run.insertToDB()
+
+        self.db.insert(self.document)
+    def queryDB(self):
+        pass
+
+    def main(self):
+
+        self.getCatsInfo()
+        self.getCatsImages()
+        #self.insertToDB()
+        #self.queryDB()
+
 if __name__ == '__main__':
-    main()
+    x = Cats()
+    x.main()
