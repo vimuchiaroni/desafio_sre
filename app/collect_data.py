@@ -1,6 +1,6 @@
 import requests
 import json
-from tinydb import TinyDB
+#from tinydb import TinyDB
 
 class Cats():
     def __init__(self):
