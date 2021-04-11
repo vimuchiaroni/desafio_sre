@@ -49,8 +49,8 @@ class Cats():
 
     def insertToDB(self):
 
-
-        self.db.insert(self.document)
+        pass
+        #self.db.insert(self.document)
     def queryDB(self):
         pass
 
