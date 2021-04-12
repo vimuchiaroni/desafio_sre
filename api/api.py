@@ -52,19 +52,32 @@ def getTemperamento():
         temperamentos = []
         for racas in db.document:
             for temperamento in db.document[racas][0]['temperamento'].split(','):
-                if temperamento.strip() not in temperamentos:
-                    temperamentos.append(temperamento.strip())
+                if temperamento.strip().lower() not in temperamentos:
+                    temperamentos.append(temperamento.strip().lower())
         return jsonify(f'Temperamentos Disponiveis: {temperamentos}')
-
-
-
-
 
     return gatos
 @app.route('/api/origem', methods=['get'])
 def getOrigem():
-    pass
+    origem = request.args.get('origem')
+    gatos = {}
+    if origem:
+        try:
+            for gato in db.document:
+                if re.search(rf'\b{origem}\b', db.document[gato][0]['origem'], flags=re.IGNORECASE):
+                    gatos[gato] = db.document[gato]
+        except Exception as err:
+            return jsonify("Nenhum gato encontrado com o a origem informada")
 
+    else:
+        origens = []
+        for racas in db.document:
+            for paises in db.document[racas][0]['origem'].split(','):
+                if paises.strip().lower() not in origens:
+                    origens.append(paises.strip().lower())
+        return jsonify(f'Origens Disponiveis: {origens}')
+
+    return gatos
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', use_reloader=False)
