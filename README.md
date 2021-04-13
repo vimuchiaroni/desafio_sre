@@ -32,6 +32,6 @@ A documentação da api pode ser encontrada [aqui](https://vimuchiaroni.github.i
         ``` 
     3. Rodar o container:
         ```
-        # docker run -p 5000:8000 vimuchiaroni/desafio_sre:latest
+        # docker run -p 5000:8000 desafio_sre:latest
          ```   
     4. Acesse a API utilizando o endereço http://localhost:5000
