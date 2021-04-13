@@ -5,7 +5,7 @@ import json
 class Cats():
     def __init__(self):
         self.document={}
-        self.data = requests.get("https://api.thecatapi.com/v1/breeds")
+        self.data = requests.get("https://api.thecatapi.com/v1/breeds", verify=False)
         #self.db = TinyDB('nosql.db')
 
     def getCatsInfo(self):

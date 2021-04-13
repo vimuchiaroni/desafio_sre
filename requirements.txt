@@ -2,3 +2,6 @@ requests
 click==7.1.2
 Flask==1.1.2
 gunicorn==20.0.4
+elastic-apm[flask]==5.3.3
+elasticsearch
+
