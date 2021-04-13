@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "650640e2-fd66-484b-ad5e-76a3e72649eb",
+		"name": "apiGatos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "listarTodasasRaças",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/racas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"racas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "filtrarRaça",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/racas?raca=abys",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"racas"
+					],
+					"query": [
+						{
+							"key": "raca",
+							"value": "abys"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listaTemperamentos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/temperamento",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"temperamento"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "filtrarTemperamentos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/temperamento?temperamento=Affectionate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"temperamento"
+					],
+					"query": [
+						{
+							"key": "temperamento",
+							"value": "Affectionate"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarOrigens",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/origem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"origem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "filtrarOrigens",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/origem?origem=france",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"origem"
+					],
+					"query": [
+						{
+							"key": "origem",
+							"value": "france"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

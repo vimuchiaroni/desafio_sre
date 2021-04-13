@@ -7,14 +7,10 @@ from flask import jsonify
 from flask import Response
 from flask import request
 from elasticapm.contrib.flask import ElasticAPM
-from elasticapm.handlers.logging import Formatter
 from logging.config import dictConfig
+
 #Logging configuration
-#logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(name)s | %(levelname)s | %(message)s')
-
-
-
-
+logging.basicConfig(level=logging.INFO, format='%(asctime)s] %(levelname)s in %(module)s: %(message)s')
 
 #Flask application configuration
 app_name = 'gatos'
@@ -98,19 +94,25 @@ def getTemperamento():
     tipo_temperamento = request.args.get('temperamento')
     gatos = {}
     if tipo_temperamento:
-        try:
+
             for gato in db.document:
-                if re.search(rf'\b{tipo_temperamento}\b', db.document[gato][0]['temperamento'], flags=re.IGNORECASE):
-                    gatos[gato] = db.document[gato]
-        except Exception as err:
-            return jsonify("Nenhum gato encontrado com o temperamento informado"), 204
+                try:
+                    if re.search(rf'\b{tipo_temperamento}\b', db.document[gato][0]['temperamento'], flags=re.IGNORECASE):
+                        gatos[gato] = db.document[gato]
+                except Exception as err:
+                    continue
+
 
     else:
         temperamentos = []
         for racas in db.document:
-            for temperamento in db.document[racas][0]['temperamento'].split(','):
-                if temperamento.strip().lower() not in temperamentos:
-                    temperamentos.append(temperamento.strip().lower())
+            try:
+                for temperamento in db.document[racas][0]['temperamento'].split(','):
+                    if temperamento.strip().lower() not in temperamentos:
+                        temperamentos.append(temperamento.strip().lower())
+            except Exception as err:
+                logging.error(f'Erro ao listar raças: {err} {racas}'), 500
+                continue
         return jsonify(f'Temperamentos Disponiveis: {temperamentos}'), 200
 
     return gatos, 200
@@ -119,19 +121,23 @@ def getOrigem():
     origem = request.args.get('origem')
     gatos = {}
     if origem:
-        try:
-            for gato in db.document:
+
+        for gato in db.document:
+            try:
                 if re.search(rf'\b{origem}\b', db.document[gato][0]['origem'], flags=re.IGNORECASE):
                     gatos[gato] = db.document[gato]
-        except Exception as err:
-            return jsonify("Nenhum gato encontrado com o a origem informada"), 204
+            except Exception as err:
+                continue
 
     else:
         origens = []
         for racas in db.document:
-            for paises in db.document[racas][0]['origem'].split(','):
-                if paises.strip().lower() not in origens:
-                    origens.append(paises.strip().lower())
+            try:
+                for paises in db.document[racas][0]['origem'].split(','):
+                    if paises.strip().lower() not in origens:
+                        origens.append(paises.strip().lower())
+            except Exception as err:
+                continue
         return jsonify(f'Origens Disponiveis: {origens}'), 200
 
     return gatos, 200
