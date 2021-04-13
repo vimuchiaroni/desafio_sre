@@ -1,4 +1,4 @@
-import app.collect_data as createDB
+from app import collect_data as createDB
 from flask import Flask
 import logging
 import re
