@@ -17,6 +17,7 @@ A documentação da api pode ser encontrada [aqui](https://vimuchiaroni.github.i
         ```
         # docker run -p 5000:8000 vimuchiaroni/desafio_sre:latest
         ```
+    2. Acesse a API utilizando o endereço http://localhost:5000
         
 - Opção B
 
@@ -33,3 +34,4 @@ A documentação da api pode ser encontrada [aqui](https://vimuchiaroni.github.i
         ```
         # docker run -p 5000:8000 vimuchiaroni/desafio_sre:latest
          ```   
+    4. Acesse a API utilizando o endereço http://localhost:5000
