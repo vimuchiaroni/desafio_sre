@@ -36,6 +36,16 @@ A documentação da api pode ser encontrada [aqui](https://vimuchiaroni.github.i
          ```   
     4. Acesse a API utilizando o endereço http://localhost:5000
 
+- Opção C
+    1. Clonar o projeto do Github:
+        ```
+        # git clone https://github.com/vimuchiaroni/desafio_sre
+        ```
+    2. Rode os codigos python diretamente do seu computador:
+          ```
+        #  cd desafio_sre
+        # python api/api.py
+         ```   
 ### Logs e métricas
 
 É possivel conectar a API a um Elastic/APM server. Para isso, basta configurar a variável ELASTIC_SERVER. Caso haja um token de autenticação, é necessário também informar a variável ELASTIC_TOKEN durante o docker run.
