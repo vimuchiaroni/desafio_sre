@@ -13,9 +13,12 @@ A documentação da api pode ser encontrada [aqui](https://vimuchiaroni.github.i
 
 - Opção 1
     
-    Utilizando docker, rode o container disponibilizado no DockerHub
-
+    Utilizando docker, rode o container disponibilizado no DockerHub:
+        ```
         # docker run -p 5000:8000 vimuchiaroni/desafio_sre:latest
+        ```
+        
+
 
 
 - Opção 2
