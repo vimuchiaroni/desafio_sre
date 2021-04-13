@@ -8,14 +8,32 @@ from flask import Response
 from flask import request
 from elasticapm.contrib.flask import ElasticAPM
 from elasticapm.handlers.logging import Formatter
-
+from logging.config import dictConfig
 #Logging configuration
-logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(name)s | %(levelname)s | %(message)s')
+#logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(name)s | %(levelname)s | %(message)s')
+
+
+
+
 
 #Flask application configuration
 app_name = 'gatos'
 app = Flask(app_name)
-
+dictConfig({
+    'version': 1,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    }},
+    'handlers': {'wsgi': {
+        'class': 'logging.StreamHandler',
+        'stream': 'ext://flask.logging.wsgi_errors_stream',
+        'formatter': 'default'
+    }},
+    'root': {
+        'level': 'INFO',
+        'handlers': ['wsgi']
+    }
+})
 if 'ELASTIC_SERVER' in os.environ:
     if 'ELASTIC_TOKEN' in os.environ:
         apmConfig = {
@@ -39,9 +57,7 @@ if 'ELASTIC_SERVER' in os.environ:
         }
     try:
         app.config['ELASTIC_APM'] = apmConfig
-        # Formatador da mensagem
-        formatter = Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-        apm = ElasticAPM(app)
+        apm = ElasticAPM(app, logging=True)
     except Exception as apmErr:
         logging.error(f'Não foi possivel conectar-se ao APM server: {apmErr}')
 
@@ -57,8 +73,9 @@ except Exception as dbError:
 
 @app.route("/api")
 def index():
+    logging.error("Não permitido")
     return Response(
-        "The response body goes here",
+        "Path não permitido",
         status=400,
     )
 
