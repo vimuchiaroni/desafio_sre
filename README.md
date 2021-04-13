@@ -16,21 +16,21 @@ A documentação da api pode ser encontrada [aqui](https://vimuchiaroni.github.i
     Utilizando docker, rode o container disponibilizado no DockerHub
     
     ```
-    docker run -p 5000:8000 vimuchiaroni/desafio_sre:latest
+    # docker run -p 5000:8000 vimuchiaroni/desafio_sre:latest
     ```
 
 - Opção 2
 
     1. Clonar o projeto do Github:
-    ```
-        git clone https://github.com/vimuchiaroni/desafio_sre
-     ```
+        ```
+        # git clone https://github.com/vimuchiaroni/desafio_sre
+        ```
     2. Fazer o build da imagem localmente utilizando docker:
         ```
-        cd desafio_sre
-        docker build . -t desafio_sre:latest
+        # cd desafio_sre
+        # docker build . -t desafio_sre:latest
         ``` 
     3. Rodar o container:
-     ```
-    docker run -p 5000:8000 vimuchiaroni/desafio_sre:latest
-    ```   
+        ```
+        # docker run -p 5000:8000 vimuchiaroni/desafio_sre:latest
+         ```   
