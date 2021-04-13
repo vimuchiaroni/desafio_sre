@@ -6,8 +6,9 @@ from tinydb import TinyDB
 class Cats():
     def __init__(self):
         self.document = {}
-        self.data = requests.get("https://api.thecatapi.com/v1/breeds", verify=False)
+        self.data = requests.get("http://api.thecatapi.com/v1/breeds", verify=False)
         self.db = TinyDB('nosql.db')
+        self.protocol = 'http'
         logging.basicConfig(level=logging.INFO, format='%(asctime)s] %(levelname)s in %(module)s: %(message)s')
 
     def getCatsInfo(self):
@@ -38,7 +39,7 @@ class Cats():
             for cats in json.loads(self.data.content):
                 try:
                     id = cats['id']
-                    response = requests.get(f"https://api.thecatapi.com/v1/images/search?breed_id={id}&limit={limiteImagens}", verify=False)
+                    response = requests.get(f"{self.protocol}://api.thecatapi.com/v1/images/search?breed_id={id}&limit={limiteImagens}")
                     imageUrl = json.loads(response.content)
                     imagens = []
                     for items in range(len(imageUrl)):
@@ -57,8 +58,7 @@ class Cats():
         elif 'chapeu' in tipo:
             logging.info("Coletando imagens de gatos de chapéu")
             category_id = '1'
-            response = requests.get(f"https://api.thecatapi.com/v1/images/search?category_ids={category_id}&limit={limiteImagens}",
-                                    verify=False)
+            response = requests.get(f"{self.protocol}://api.thecatapi.com/v1/images/search?category_ids={category_id}&limit={limiteImagens}")
             imageUrl = json.loads(response.content)
             imagensChapeu = []
             for items in range(0, limiteImagens):
@@ -68,8 +68,7 @@ class Cats():
         elif 'oculos' in tipo:
             logging.info("Coletando imagens de gatos de oculos")
             category_id = '4'
-            response = requests.get(f"https://api.thecatapi.com/v1/images/search?category_ids={category_id}&limit={limiteImagens}",
-                                    verify=False)
+            response = requests.get(f"{self.protocol}://api.thecatapi.com/v1/images/search?category_ids={category_id}&limit={limiteImagens}")
             imageUrl = json.loads(response.content)
             imagensOculos = []
             for items in range(0, limiteImagens):

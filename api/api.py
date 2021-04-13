@@ -10,11 +10,11 @@ from elasticapm.contrib.flask import ElasticAPM
 from logging.config import dictConfig
 
 #Logging configuration
-logging.basicConfig(level=logging.INFO, format='%(asctime)s] %(levelname)s in %(module)s: %(message)s')
+#logging.basicConfig(level=logging.INFO, format='%(asctime)s] %(levelname)s in %(module)s: %(message)s')
+
 
 #Flask application configuration
-app_name = 'gatos'
-app = Flask(app_name)
+
 dictConfig({
     'version': 1,
     'formatters': {'default': {
@@ -26,10 +26,14 @@ dictConfig({
         'formatter': 'default'
     }},
     'root': {
-        'level': 'INFO',
+        'level': 'DEBUG',
         'handlers': ['wsgi']
     }
 })
+app_name = 'gatos'
+app = Flask(app_name)
+app.debug = True
+
 if 'ELASTIC_SERVER' in os.environ:
     if 'ELASTIC_TOKEN' in os.environ:
         apmConfig = {
@@ -59,10 +63,10 @@ if 'ELASTIC_SERVER' in os.environ:
 
 #Runtime create database
 try:
-    logging.info("Initializing Database...")
+    logging.info("Inicializando Database...")
     db = createDB.Cats()
     db.main()
-    logging.info("Database created successfully")
+    logging.info("Api inicializada com sucesso")
 except Exception as dbError:
     logging.error(f"Failed to create Database: {dbError}")
 
@@ -111,7 +115,6 @@ def getTemperamento():
                     if temperamento.strip().lower() not in temperamentos:
                         temperamentos.append(temperamento.strip().lower())
             except Exception as err:
-                logging.error(f'Erro ao listar raças: {err} {racas}'), 500
                 continue
         return jsonify(f'Temperamentos Disponiveis: {temperamentos}'), 200
 
