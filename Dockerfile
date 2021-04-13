@@ -6,6 +6,6 @@ COPY requirements.txt /application
 
 WORKDIR /application/api
 
-RUN pip install -r /application/requirements.txt
+RUN pip install --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --trusted-host pypi.org -r /application/requirements.txt
 EXPOSE 8000
 ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:8000", "--log-level", "debug", "api:app", "--timeout", "1200"]

@@ -43,3 +43,6 @@ A documentação da api pode ser encontrada [aqui](https://vimuchiaroni.github.i
 
         # docker run -p 5000:8000 -e ELASTIC_SERVER=<ELASTIC_ENDPOINT> -e ELASTIC_TOKEN=<ELASTIC_TOKEN> desafio_sre:latest
 
+- Exemplo de métricas:
+
+![](.README_images/apm_metrics.png)
