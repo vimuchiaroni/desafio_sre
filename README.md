@@ -66,3 +66,7 @@ A documentação da api pode ser encontrada [aqui](https://vimuchiaroni.github.i
 ![](.README_images/kibana_error.png)
 
 ![](.README_images/kibana_info.png)
+
+![](.README_images/http_status.png)
+
+![](.README_images/http_400.png)

@@ -1,5 +1,5 @@
 import requests
-import logging
+#import logging
 import json
 from tinydb import TinyDB
 
@@ -9,10 +9,10 @@ class Cats():
         self.data = requests.get("http://api.thecatapi.com/v1/breeds", verify=False)
         self.db = TinyDB('nosql.db')
         self.protocol = 'http'
-        logging.basicConfig(level=logging.INFO, format='%(asctime)s] %(levelname)s in %(module)s: %(message)s')
+        #logging.basicConfig(level=logging.INFO, format='%(asctime)s] %(levelname)s in %(module)s: %(message)s')
 
     def getCatsInfo(self):
-        logging.info("Coletando informações das raças")
+        #logging.info("Coletando informações das raças")
         try:
 
             for breed in json.loads(self.data.content):
@@ -35,7 +35,7 @@ class Cats():
 
         limiteImagens = 3
         if 'raca' in tipo:
-            logging.info("Coletando imagens das raças")
+            #logging.info("Coletando imagens das raças")
             for cats in json.loads(self.data.content):
                 try:
                     id = cats['id']
@@ -53,10 +53,10 @@ class Cats():
                         self.document = [cat]
 
                 except Exception as ex:
-                    print(f'{ex}: para a raça: {id}')
+                    #print(f'{ex}: para a raça: {id}')
                     continue
         elif 'chapeu' in tipo:
-            logging.info("Coletando imagens de gatos de chapéu")
+            #logging.info("Coletando imagens de gatos de chapéu")
             category_id = '1'
             response = requests.get(f"{self.protocol}://api.thecatapi.com/v1/images/search?category_ids={category_id}&limit={limiteImagens}")
             imageUrl = json.loads(response.content)
@@ -66,7 +66,7 @@ class Cats():
             self.document['imagensChapeu'] = imagensChapeu
 
         elif 'oculos' in tipo:
-            logging.info("Coletando imagens de gatos de oculos")
+            #logging.info("Coletando imagens de gatos de oculos")
             category_id = '4'
             response = requests.get(f"{self.protocol}://api.thecatapi.com/v1/images/search?category_ids={category_id}&limit={limiteImagens}")
             imageUrl = json.loads(response.content)

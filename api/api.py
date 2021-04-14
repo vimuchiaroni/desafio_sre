@@ -1,38 +1,41 @@
 import os
-import logging
 import re
+from logging.config import dictConfig
+
+#Logging configuration
+#logging.basicConfig(level=logging.INFO, format='%(asctime)s] %(levelname)s in %(module)s: %(message)s')
+#logger = logging.getLogger(__name__)
+
+
+#Flask application configuration
+dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    }},
+    'handlers': {
+        'wsgi': {
+        'class': 'logging.StreamHandler',
+        'stream': 'ext://flask.logging.wsgi_errors_stream',
+        'formatter': 'default'
+    }},
+    'root': {
+        'level': 'INFO',
+        'handlers': ['wsgi']
+    }
+})
+
+
 from flask import Flask
 from app import collect_data as createDB
 from flask import jsonify
 from flask import Response
 from flask import request
 from elasticapm.contrib.flask import ElasticAPM
-from logging.config import dictConfig
 
-#Logging configuration
-#logging.basicConfig(level=logging.INFO, format='%(asctime)s] %(levelname)s in %(module)s: %(message)s')
-
-
-#Flask application configuration
-
-dictConfig({
-    'version': 1,
-    'formatters': {'default': {
-        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
-    }},
-    'handlers': {'wsgi': {
-        'class': 'logging.StreamHandler',
-        'stream': 'ext://flask.logging.wsgi_errors_stream',
-        'formatter': 'default'
-    }},
-    'root': {
-        'level': 'DEBUG',
-        'handlers': ['wsgi']
-    }
-})
 app_name = 'gatos'
-app = Flask(app_name)
-app.debug = True
+app = Flask(__name__)
 
 if 'ELASTIC_SERVER' in os.environ:
     if 'ELASTIC_TOKEN' in os.environ:
@@ -59,21 +62,21 @@ if 'ELASTIC_SERVER' in os.environ:
         app.config['ELASTIC_APM'] = apmConfig
         apm = ElasticAPM(app, logging=True)
     except Exception as apmErr:
-        logging.error(f'Não foi possivel conectar-se ao APM server: {apmErr}')
+        app.logger.error(f'Não foi possivel conectar-se ao APM server: {apmErr}')
 
 #Runtime create database
 try:
-    logging.info("Inicializando Database...")
+    app.logger.info("Inicializando Database...")
     db = createDB.Cats()
     db.main()
-    logging.info("Api inicializada com sucesso")
+    app.logger.info("Api inicializada com sucesso")
 except Exception as dbError:
-    logging.error(f"Failed to create Database: {dbError}")
+    app.logger.error(f"Failed to create Database: {dbError}")
 
 
 @app.route("/api")
 def index():
-    logging.error("Não permitido")
+    app.logger.error("Acesso ao /api não permitido")
     return Response(
         "Path não permitido",
         status=400,

@@ -8,4 +8,4 @@ WORKDIR /application/api
 
 RUN pip install --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --trusted-host pypi.org -r /application/requirements.txt
 EXPOSE 8000
-ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:8000", "--log-level", "debug", "api:app", "--timeout", "1200"]
+ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:8000", "api:app", "--log-level", "debug", "--timeout", "1200"]
