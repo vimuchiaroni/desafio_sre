@@ -1,14 +1,16 @@
 # SRE
 
+![](.README_images/8b43f506.png)
+
 - App
 
-A aplicação consiste em uma classe CATS que busca dados the cat API(https://thecatapi.com) e insere os dados de interesse em um documento em memória
+A aplicação consiste em uma classe CATS que busca dados the cat API(https://thecatapi.com) e insere os dados de interesse em um documento em memória e salva uma cópia deste em arquivo local.
 
 - API
 
 A api, por sua vez, importa a classe cats e utiliza o documento resultante como um banco de dados em memória.
 A documentação da api pode ser encontrada [aqui](https://vimuchiaroni.github.io).
-
+A API possui a funcionalidade de enviar métricas execução para um ELASTIC APM. Para verificar como habilitar essa função, veja [aqui](#Logs-e-métricas).
 ### Rodando localmente
 
 - Opção A
