@@ -25,7 +25,7 @@ class Cats():
                     "temperamento": breed['temperament'],
                     "descricao": breed['description']
                 }
-                if id in self.document:
+                if id in self.dbraca:
                     self.dbraca[id][0].append(cat)
                 else:
                     self.dbraca[id] = [cat]
