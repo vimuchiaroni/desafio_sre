@@ -46,7 +46,7 @@ A API possui a funcionalidade de enviar métricas execução para um ELASTIC APM
     2. Rode os codigos python diretamente do seu computador:
           ```
         #  cd desafio_sre
-        # python api/api.py
+        # python api/api.py --> irá criar um arquivo api/nosql.db com o banco de dados gerado
          ```   
 ### Logs e métricas
 

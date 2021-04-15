@@ -87,64 +87,60 @@ def index():
 def listaRacas():
 
     filter = request.args.get('raca')
-    if filter:
-        try:
-            return jsonify(db.document[filter]), 200
-        except Exception as err:
-            return jsonify("Raça não encontrada"), 204
-    else:
-        return jsonify(db.document), 200
+    try:
+        if filter:
+            if filter in db.dbraca:
+                return jsonify(db.dbraca[filter]), 200
+            else:
+                return jsonify({})
+        else:
+            return jsonify(db.dbraca), 200
+    except Exception as err:
+        return jsonify("Não foi possivel carregar as  raças"), 400
 
 
 @app.route('/api/temperamento', methods=['get'])
 def getTemperamento():
     tipo_temperamento = request.args.get('temperamento')
     gatos = {}
-    if tipo_temperamento:
-
-            for gato in db.document:
-                try:
-                    if re.search(rf'\b{tipo_temperamento}\b', db.document[gato][0]['temperamento'], flags=re.IGNORECASE):
-                        gatos[gato] = db.document[gato]
-                except Exception as err:
-                    continue
-
-
-    else:
-        temperamentos = []
-        for racas in db.document:
-            try:
-                for temperamento in db.document[racas][0]['temperamento'].split(','):
+    try:
+        if tipo_temperamento:
+            for gato in db.dbraca:
+                if re.search(rf'\b{tipo_temperamento}\b', db.dbraca[gato][0]['temperamento'], flags=re.IGNORECASE):
+                    gatos[gato] = db.dbraca[gato]
+        else:
+            temperamentos = []
+            for racas in db.dbraca:
+                for temperamento in db.dbraca[racas][0]['temperamento'].split(','):
                     if temperamento.strip().lower() not in temperamentos:
                         temperamentos.append(temperamento.strip().lower())
-            except Exception as err:
-                continue
-        return jsonify(f'Temperamentos Disponiveis: {temperamentos}'), 200
-
+            return jsonify(f'Temperamentos Disponiveis: {temperamentos}'), 200
+    except Exception as err:
+        app.logger.error(f'Não foi possivel carregar os temperamentos: {err}')
+        return jsonify(f'Não foi possivel carregar os temperamentos: {err}'), 400
     return gatos, 200
 @app.route('/api/origem', methods=['get'])
 def getOrigem():
     origem = request.args.get('origem')
     gatos = {}
-    if origem:
+    try:
+        if origem:
 
-        for gato in db.document:
-            try:
-                if re.search(rf'\b{origem}\b', db.document[gato][0]['origem'], flags=re.IGNORECASE):
-                    gatos[gato] = db.document[gato]
-            except Exception as err:
-                continue
+            for gato in db.dbraca:
 
-    else:
-        origens = []
-        for racas in db.document:
-            try:
-                for paises in db.document[racas][0]['origem'].split(','):
+                    if re.search(rf'\b{origem}\b', db.dbraca[gato][0]['origem'], flags=re.IGNORECASE):
+                        gatos[gato] = db.dbraca[gato]
+        else:
+            origens = []
+            for racas in db.dbraca:
+                for paises in db.dbraca[racas][0]['origem'].split(','):
                     if paises.strip().lower() not in origens:
                         origens.append(paises.strip().lower())
-            except Exception as err:
-                continue
-        return jsonify(f'Origens Disponiveis: {origens}'), 200
+            return jsonify(f'Origens Disponiveis: {origens}'), 200
+    except Exception as err:
+        app.logger.error(f'Não foi possivel carregar as origens: {err}')
+        return jsonify(f'Não foi possivel carregar as origens: {err}'), 400
+
 
     return gatos, 200
 

@@ -6,6 +6,8 @@ from tinydb import TinyDB
 class Cats():
     def __init__(self):
         self.document = {}
+        self.dbraca = {}
+        self.dbimages = {}
         self.data = requests.get("http://api.thecatapi.com/v1/breeds", verify=False)
         self.db = TinyDB('nosql.db')
         self.protocol = 'http'
@@ -24,9 +26,9 @@ class Cats():
                     "descricao": breed['description']
                 }
                 if id in self.document:
-                    self.document[id][0].append(cat)
+                    self.dbraca[id][0].append(cat)
                 else:
-                    self.document[id] = [cat]
+                    self.dbraca[id] = [cat]
 
         except Exception as ex:
             print(ex)
@@ -47,10 +49,10 @@ class Cats():
                     cat = {
                         'imagesUrl': imagens
                     }
-                    if id in self.document:
-                        self.document[id][0].update(cat)
+                    if id in self.dbraca:
+                        self.dbraca[id][0].update(cat)
                     else:
-                        self.document = [cat]
+                        self.dbraca = [cat]
 
                 except Exception as ex:
                     #print(f'{ex}: para a raça: {id}')
@@ -63,7 +65,7 @@ class Cats():
             imagensChapeu = []
             for items in range(0, limiteImagens):
                 imagensChapeu.append(imageUrl[items]['url'])
-            self.document['imagensChapeu'] = imagensChapeu
+            self.dbimages['imagensChapeu'] = imagensChapeu
 
         elif 'oculos' in tipo:
             #logging.info("Coletando imagens de gatos de oculos")
@@ -73,7 +75,7 @@ class Cats():
             imagensOculos = []
             for items in range(0, limiteImagens):
                 imagensOculos.append(imageUrl[items]['url'])
-            self.document['imagensOculos'] = imagensOculos
+            self.dbimages['imagensOculos'] = imagensOculos
 
     def insertToDB(self):
 
@@ -87,6 +89,7 @@ class Cats():
         self.getCatsImages(tipo='raca')
         self.getCatsImages(tipo='chapeu')
         self.getCatsImages(tipo='oculos')
+        self.document = {"breeds": self.dbraca, "imagens": self.dbimages}
         #Descomente a linha abaixo para gravar o banco em um arquivo
         self.insertToDB()
         #self.queryDB()
@@ -95,3 +98,4 @@ if __name__ == '__main__':
     x = Cats()
     x.main()
     print(x.document)
+
